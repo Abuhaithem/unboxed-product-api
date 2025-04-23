@@ -1,8 +1,6 @@
-import { Request, Response, NextFunction } from "express";
+import { Request, Response } from "express";
 import axios from "axios";
 import { getOpenAIClient } from "../config/openai";
-// import { buildPrompt } from "../utils/promptBuilder";
-import { model } from "../config/gemini";
 import { buildPrompt } from "../utils/promptBuilder";
 import { preprocessHtml } from "../utils/extractProductDetails";
 
@@ -10,29 +8,42 @@ export const parseProduct = async (
   req: Request,
   res: Response
 ): Promise<void> => {
-  const { url } = req.body;
+  const { url, openaiApiKey } = req.body;
 
   try {
-    if (!url || !process.env.geminiApiKey) {
+    if (!url || !openaiApiKey) {
       res.status(400).json({ error: "Missing URL or OpenAI API key" });
       return;
     }
+
+    // Fetch the raw HTML
     const { data: html } = await axios.get<string>(url);
 
-    // Preprocess the HTML to extract relevant sections
     const productHtml = preprocessHtml(html);
-    console.log(productHtml);
     const prompt = buildPrompt(productHtml, url);
 
-    const response = await model.generateContent(prompt);
+    const openai = getOpenAIClient(openaiApiKey);
 
-    let message = response.response.text();
-    if (!message) throw new Error("Empty response from Gemini");
+    const response = await openai.chat.completions.create({
+      model: "gpt-4o",
+      messages: [
+        {
+          role: "system",
+          content:
+            "You are a helpful assistant that extracts structured product data from raw HTML content and returns valid JSON.",
+        },
+        {
+          role: "user",
+          content: prompt,
+        },
+      ],
+    });
 
-    // Remove any leading/trailing backticks and "json" identifier
-    message = message.trim();
+    let message = response.choices[0].message.content?.trim();
+    if (!message) throw new Error("Empty response from OpenAI");
+
     if (message.startsWith("```json")) {
-      message = message.substring("```json".length).trim();
+      message.substring("```json".length).trim();
     }
     if (message.endsWith("```")) {
       message = message.slice(0, -3).trim();
