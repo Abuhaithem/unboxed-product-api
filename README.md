@@ -38,14 +38,28 @@ This API accepts a live product URL and your Google Generative AI API key, scrap
 
 ```json
 {
-  "url": "https://example.com/product/123",
-  "title": "Sample Hoodie",
-  "category": "Apparel",
-  "attributes": {
-    "colorOptions": ["Black", "White"],
-    "sizeOptions": ["S", "M", "L"]
+  "url": "https://now-time.biz/collections/current/products/ideal-palace",
+  "title": "Ideal Palace",
+  "description": "Ideal Palace, a garment inspired by Facteur Cheval's historic monument called the 'Ideal Palace'.",
+  "category": "",
+  "brand": "",
+  "imageUrls": [],
+  "pricing": {
+    "rawPrice": 40,
+    "currency": "USD",
+    "originalPrice": 0,
+    "discountPrice": 0
   },
-  "rawPrice": 49.99
+  "attributes": {
+    "colorOptions": [],
+    "material": "100% Ring Spun Cotton",
+    "gender": "",
+    "availability": "Sold Out"
+  },
+  "metadata": {
+    "scrapedAt": "",
+    "source": "HTML Content"
+  }
 }
 ```
 
