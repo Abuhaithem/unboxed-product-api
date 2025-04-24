@@ -9,7 +9,7 @@ ${productDetails}
 
 Based on the information above, extract and return the product data in the following JSON format:
 {
-  "url": "string",
+  "url": ${url},
   "title": "string",
   "description": "string",
   "category": "string",
@@ -30,7 +30,7 @@ Based on the information above, extract and return the product data in the follo
     "availability": "string"
   },
   "metadata": {
-    "scrapedAt": "string",
+    "scrapedAt": now date(),
     "source": "string",
   }
 }
