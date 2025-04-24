@@ -1,6 +1,6 @@
 # 🧐 unboxed-product-api
 
-> A TypeScript + Express REST API that converts product page URLs into clean, structured data using Google’s Generative AI and HTML preprocessing.
+> A TypeScript + Express REST API that converts product page URLs into clean, structured data using OpenAI Key and HTML preprocessing.
 
 ---
 
@@ -14,7 +14,7 @@ This API accepts a live product URL and your Google Generative AI API key, scrap
 
 - **Node.js** + **Express.js**
 - **TypeScript**
-- **@google/generative-ai**
+- **openAI**
 - **Cheerio** (for HTML preprocessing)
 - **Axios** (for HTTP requests)
 - **dotenv** (for local environment config)
@@ -30,7 +30,7 @@ This API accepts a live product URL and your Google Generative AI API key, scrap
 ```json
 {
   "url": "https://example.com/product/123",
-  "apiKey": "YOUR_GOOGLE_API_KEY"
+  "openaiApiKey": "YOUR_OPENAI_API_KEY"
 }
 ```
 
@@ -100,7 +100,7 @@ npm run dev
 
 ```env
 PORT=3000
-GOOGLE_API_KEY=your-google-api-key
+openaiApiKey=your-openai-api-key
 ```
 
 ---
@@ -113,9 +113,3 @@ GOOGLE_API_KEY=your-google-api-key
 - 🧠 You may need to tune prompt and token limits based on site complexity.
 
 ---
-
-## 📬 Submission Requirements
-
-- ✅ Live deployed API URL
-- ✅ GitHub repository with this README
-- ✅ Loom walkthrough (2–5 min)
